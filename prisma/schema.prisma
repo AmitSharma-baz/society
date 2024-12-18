@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Society {
+  id               Int         @id @default(autoincrement())
+  name             String
+  address          String
+  registrationNo   String?
+  registrationDate DateTime?
+  billingPeriod    String      @default("monthly") //Options: "monthly", "quarterly", "yearly"
+  flatsPlots       FlatPlot[]
+  committees       Committee[]
+  bills            Bill[]
+  complaints       Complaint[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model FlatPlot {
+  id            Int         @id @default(autoincrement())
+  flatNumber    String
+  ownerName     String
+  contactNumber String
+  societyId     Int
+  society       Society     @relation(fields: [societyId], references: [id])
+  bills         Bill[]
+  penalties     Penalty[]
+  complaints    Complaint[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Bill {
+  id              Int           @id @default(autoincrement())
+  period          String // Period for this bill, e.g., "January 2024"
+  startDate       DateTime
+  endDate         DateTime
+  amount          Float
+  dueDate         DateTime
+  paidamount      Float
+  remainingAmount Float
+  issettled       Boolean
+  flatPlotId      Int
+  societyId       Int
+  society         Society       @relation(fields: [societyId], references: [id])
+  flatPlot        FlatPlot      @relation(fields: [flatPlotId], references: [id])
+  payments        BillPayment[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model BillPayment {
+  id          Int      @id @default(autoincrement())
+  paymentDate DateTime
+  amount      Float
+  billId      Int
+  bill        Bill     @relation(fields: [billId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model Penalty {
+  id         Int      @id @default(autoincrement())
+  reason     String
+  amount     Float
+  issuedDate DateTime
+  flatPlotId Int
+  flatPlot   FlatPlot @relation(fields: [flatPlotId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Complaint {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  status      String   @default("Pending") // e.g., Pending, Resolved
+  societyId   Int
+  society     Society  @relation(fields: [societyId], references: [id])
+  flatPlotId  Int
+  flatPlot    FlatPlot @relation(fields: [flatPlotId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Committee {
+  id            Int      @id @default(autoincrement())
+  post          String // e.g., President, Secretary
+  memberName    String
+  contactNumber String
+  societyId     Int
+  society       Society  @relation(fields: [societyId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
