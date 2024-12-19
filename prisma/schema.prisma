@@ -38,8 +38,31 @@ model FlatPlot {
   bills         Bill[]
   penalties     Penalty[]
   complaints    Complaint[]
+  isrented      Boolean @default(false)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+  occupants     Occupant[]
+}
+
+model Occupant {
+  id            Int      @id @default(autoincrement())
+  flatPlotId    Int
+  name          String
+  relation      String?  // Relation to the owner (for family members)
+  contact       String?  // Contact information (for family members or renter)
+  type          OccupantType // Type: 'Family' or 'Renter'
+  
+  // Rental-specific fields
+  rentalStart   DateTime? // Start date (only for renters)
+  rentalEnd     DateTime? // End date (only for renters)
+  rentAmount    Float?    // Rent amount (only for renters)
+  
+  flatPlot      FlatPlot @relation(fields: [flatPlotId], references: [id])
+}
+
+enum OccupantType {
+  Family
+  Renter
 }
 
 model Bill {
@@ -99,6 +122,7 @@ model Committee {
   memberName    String
   contactNumber String
   societyId     Int
+  iOrder        Int
   society       Society  @relation(fields: [societyId], references: [id])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

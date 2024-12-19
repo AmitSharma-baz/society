@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateFlatPlotdto {
   @IsString()
@@ -16,6 +16,9 @@ export class CreateFlatPlotdto {
   @IsNumber()
   @IsNotEmpty()
   societyId: number;
+
+  @IsBoolean()
+  isrented: boolean;
 }
 
 export class UpdateFlatPlotdto {
@@ -34,17 +37,7 @@ export class UpdateFlatPlotdto {
   @IsNumber()
   @IsOptional()
   societyId?: number;
+
+  @IsBoolean()
+  isrented?: boolean;
 }
-
-//   @IsString()
-//   @IsNotEmpty()
-//   ownerName: string;
-
-//   @IsString()
-//   @IsNotEmpty()
-//   contactNumber: string;
-
-//   @IsInt()
-//   @IsNotEmpty()
-//   societyId: number;
-// }

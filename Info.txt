@@ -1,0 +1,2 @@
+to run this : npm run start:dev
+to migrate in postgress : npx prisma migrate dev --name init
