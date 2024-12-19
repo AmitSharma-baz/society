@@ -1,9 +1,50 @@
-export class FlatPlot {
-  id: number;
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+
+export class CreateFlatPlotdto {
+  @IsString()
+  @IsNotEmpty()
   flatNumber: string;
-  ownerName: string;
-  contactNumber: string;
+
+  @IsString()
+  @IsOptional()
+  contactNumber?: string;
+
+  @IsString()
+  @IsOptional()
+  ownerName?: string;
+
+  @IsNumber()
+  @IsNotEmpty()
   societyId: number;
-  createdAt: Date;
-  updatedAt: Date;
 }
+
+export class UpdateFlatPlotdto {
+  @IsString()
+  @IsOptional()
+  flatNumber?: string;
+
+  @IsString()
+  @IsOptional()
+  contactNumber?: string;
+
+  @IsString()
+  @IsOptional()
+  ownerName?: string;
+
+  @IsNumber()
+  @IsOptional()
+  societyId?: number;
+}
+
+//   @IsString()
+//   @IsNotEmpty()
+//   ownerName: string;
+
+//   @IsString()
+//   @IsNotEmpty()
+//   contactNumber: string;
+
+//   @IsInt()
+//   @IsNotEmpty()
+//   societyId: number;
+// }

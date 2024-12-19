@@ -30,9 +30,7 @@ export class SocietiesService {
 }
 
   async create(data: Society) {
-        await prisma.society.create({
-        data,
-        })
+  await prisma.society.create({ data, })
   const allUsers = await prisma.society.findMany()
     return allUsers;
   }
