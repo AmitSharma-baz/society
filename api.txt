@@ -1,0 +1,84 @@
+ GET : http://localhost:3000/committee?societyId=1
+[
+    {
+        "id": 2,
+        "post": "Pramukh",
+        "memberName": "Amit Sharma",
+        "contactNumber": "123456789",
+        "societyId": 1,
+        "iOrder": 1,
+        "createdAt": "2024-12-19T08:24:22.994Z",
+        "updatedAt": "2024-12-19T08:24:22.994Z"
+    }
+]
+
+GET : http://localhost:3000/committee/2
+{
+    "id": 2,
+    "post": "Pramukh",
+    "memberName": "Amit Sharma",
+    "contactNumber": "123456789",
+    "societyId": 1,
+    "iOrder": 1,
+    "createdAt": "2024-12-19T08:24:22.994Z",
+    "updatedAt": "2024-12-19T08:24:22.994Z"
+}
+
+POST : http://localhost:3000/committee
+{
+    "memberName":"Amit Sharma",
+    "post":"Pramukh",
+    "contactNumber":"123456789",
+    "societyId": 1,
+    "iOrder" : 1
+}
+
+PATCH : http://localhost:3000/committee/2
+{
+    "memberName":"Soni Sharma",
+    "post":"Secretary",
+    "contactNumber":"123456789",
+    "societyId": 1,
+    "iOrder" : 1
+}
+
+DELETE : http://localhost:3000/committee/6
+RESPONSE : Deleted Successfully Raj Sharma, post : Pramukh.
+
+Occupant
+GET : http://localhost:3000/flat-occupant?societyId=1(All renters)
+JSON List
+GET : http://localhost:3000/flat-occupant/1(PASS FlatID)
+[
+    {
+        "id": 2,
+        "flatPlotId": 1,
+        "name": "Rakesh",
+        "relation": "Son",
+        "contact": "1234567890",
+        "type": "Renter",
+        "rentalStart": null,
+        "rentalEnd": null,
+        "rentAmount": null
+    }
+]
+
+POST: http://localhost:3000/flat-occupant
+{ 
+    "flatPlotId": 1,
+    "name": "Raju",
+    "relation": "brother",
+    "contact": "1234567890",
+    "type": "Renter",
+    "rentalStart": null,
+    "rentalEnd": null,
+    "rentAmount": null
+}
+
+PATCH : http://localhost:3000/flat-occupant/2
+ {
+  "name": "Rakesh",
+  "type": "Renter"
+}
+
+DELETE : http://localhost:3000/flat-occupant/3
